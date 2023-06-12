@@ -14,7 +14,7 @@
         />
       </div>
       <div class="column">
-        <Temporizador @aoTemporizadorFinalizado="finlizarTarefa"/>
+        <Temporizador @aoTemporizadorFinalizado="finalizarTarefa"/>
       </div>
     </div>
   </div>
@@ -26,6 +26,7 @@ import  Temporizador from './Temporizador.vue'
 
 export default defineComponent({
   name: "FormularioPrincipal",
+  emits: ['aoSalvarTarefa'],
   components: {
       Temporizador
   },
@@ -36,8 +37,11 @@ export default defineComponent({
   },
   methods: {
       finalizarTarefa(tempoDecorrido: number) : void{
-          console.log('tempo da tafefa', tempoDecorrido)
-          console.log('descricao da tareafa', this.descricao)
+         this.$emit('aoSalvarTarefa', {
+             duracaoEmSegundos: tempoDecorrido,
+             descricao: this.descricao
+         })
+         this.descricao= ''
       }
   }
 });
